@@ -1,0 +1,33 @@
+{
+  "id": "exp_cinematch",
+  "type": "project",
+  "source": "personal",
+  "title": "CineMatch: Multi-Model Movie Recommendation System",
+  "date_range": "2025-06",
+
+  "summary": "Built CineMatch, a multi-engine movie recommendation system combining content-based filtering, quiz-based preference gathering, and a hybrid model. The app uses TF-IDF, cosine similarity, and user inputs to generate personalized movie suggestions, with dynamic poster fetching via the OMDb API and a Streamlit-based UI.",
+
+  "details": [
+    "Implemented TF-IDF vectorization and cosine similarity to build a content-based recommendation engine using movie metadata.",
+    "Designed an interactive quiz-based recommender that captures user preferences such as genre, language, and decade.",
+    "Developed a hybrid model that merges content similarity with user preferences to improve recommendation accuracy.",
+    "Built a fully functional Streamlit application with session state management for smooth multi-step user interactions.",
+    "Integrated OMDb API to fetch dynamic movie posters and enhance the user experience."
+  ],
+
+  "skills": [
+    "Python", "Pandas", "Scikit-learn", "Streamlit",
+    "TF-IDF", "Cosine Similarity", "OMDb API",
+    "UI/UX Design", "Hybrid Modeling", "Recommendation Systems"
+  ],
+
+  "industry": ["Entertainment", "Media", "Machine Learning", "Consumer Tech"],
+
+  "impact": "Delivered a multi-engine recommendation system that provides personalized and engaging movie suggestions. Strengthened understanding of recommendation algorithms, user-centered design, and deploying interactive ML applications.",
+
+  "challenges": "Handled sparse and inconsistent movie metadata, tuned TF-IDF parameters and similarity thresholds for meaningful recommendations, and designed a hybrid system that effectively combines content-based and quiz-based filtering. Managed Streamlit session state to maintain user interactions across quiz and recommendation steps.",
+
+  "tags": ["machine learning", "recommendation system", "NLP", "personal project", "user experience", "streamlit"],
+
+  "content": "Built CineMatch, a multi-model movie recommendation system using TF-IDF, cosine similarity, and user preference quizzes. Developed a hybrid recommender, integrated OMDb API for dynamic posters, and deployed an interactive Streamlit application with session state management."
+}

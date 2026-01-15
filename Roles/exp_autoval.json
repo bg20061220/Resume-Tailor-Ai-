@@ -1,0 +1,32 @@
+{
+  "id": "exp_autoval",
+  "type": "role",
+  "source": "volunteer",
+  "title": "Data Analyst, DataKind",
+  "date_range": "2025-04 to 2025-06",
+
+  "summary": "Developed AutoVal, an end-to-end data science solution for a nonprofit to analyze second-hand car pricing dynamics. Delivered a Power BI dashboard, a machine learning prediction tool, and an insights report.",
+
+  "details": [
+    "Partnered with a small team to clean and analyze a 1,445-record second-hand automobile dataset, standardizing 11+ features to ensure high-quality inputs for modeling.",
+    "Built an end-to-end price prediction model and deployed it using Streamlit, improving pricing realism by engineering key features such as mileage and number of owners.",
+    "Created visual dashboards using Power BI and matplotlib, and delivered a concise report summarizing key market insights and pricing trends to teammates and stakeholders."
+  ],
+
+  "skills": [
+    "Python", "Pandas", "NumPy", "Seaborn", "Matplotlib",
+    "scikit-learn", "Data Cleaning", "Feature Engineering",
+    "Random Forest", "Streamlit", "Power BI", "Dashboarding",
+    "Data Pipelines", "Collaboration", "Communication"
+  ],
+
+  "industry": ["Automobile", "Nonprofit"],
+
+  "impact": "Delivered a multi-component system under a tight deadline, providing the nonprofit with actionable insights to support individuals navigating the used-car resale market. The dashboard and ML tool improved understanding of pricing patterns across vehicle conditions.",
+
+  "challenges": "Handled inconsistent and unstructured data across features such as imperfections, repainting, and ownership categories. Balanced three deliverables—dashboard, ML model, and written report—under a limited timeline, requiring strict prioritization and iterative experimentation.",
+
+  "tags": ["machine learning", "dashboarding", "nonprofit", "data science", "collaboration", "end-to-end project"],
+
+  "content": "Developed AutoVal, an end-to-end data science solution for a nonprofit to analyze second-hand car pricing dynamics. Cleaned and analyzed a 1,445-record dataset, built a Streamlit-based price prediction model, and created Power BI dashboards summarizing key insights. Delivered actionable findings and improved understanding of pricing patterns."
+}

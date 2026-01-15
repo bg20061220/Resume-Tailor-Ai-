@@ -1,0 +1,46 @@
+
+
+{
+  "id": "exp_wato_project",
+  "type": "role",
+  "source": "student team",
+  "title": "Software Developer, Watonomous",
+  "date_range": "2025-09",
+
+  "summary": "Worked on the Watonomous design team, contributing to robotics software development under tight deadlines. Learned C# and ROS2 in one week and implemented core planning functionality for autonomous navigation.",
+
+  "details": [
+    "Implemented an A*-based path-planning algorithm in C++ to compute obstacle-aware routes from grid maps, supporting dynamic goal updates.",
+    "Designed and integrated a modular planning node with real-time data subscriptions, state handling, and periodic replanning within a robotics software stack.",
+    "Learned C# and ROS2 fundamentals in one week to support hardware-level programming and testing.",
+    "Documented development hurdles and solutions while iteratively improving system reliability."
+  ],
+
+  "skills": [
+    "C#", "C++", "ROS2", "Path Planning", "A* Algorithm",
+    "Hardware Programming", "Robot Coding", "Problem Solving",
+    "Self-Learning", "AI-Assisted Learning", "Iterative Development",
+    "Time Management"
+  ],
+
+  "industry": [
+    "Robotics",
+    "Autonomous Systems",
+    "Hardware Engineering",
+    "AI-Assisted Development",
+    "STEM Education"
+  ],
+
+  "impact": "Successfully implemented core planning functionality and completed the robotics assignment in under a week. Demonstrated rapid skill acquisition, strong problem-solving, and the ability to contribute to real-world autonomous systems.",
+
+  "challenges": "Learning C# and ROS2 from scratch within a week while implementing hardware-level functionality. Troubleshooting robot code in real time and ensuring each component worked correctly under tight deadlines.",
+
+  "tags": [
+    "hardware", "robotics", "self-learning",
+    "AI-assisted learning", "rapid skill acquisition",
+    "ROS2", "C#", "path planning"
+  ],
+
+  "content": "Developed robotics planning components for Watonomous, implementing A* path planning in C++ and integrating a modular planning node with ROS2. Learned C# and ROS2 in one week and contributed to hardware-level programming and testing."
+}
+

@@ -1,0 +1,41 @@
+{
+  "id": "exp_medpill_ai",
+  "type": "project",
+  "source": "hackathon",
+  "title": "Medpill AI: Medicine Verification Tool",
+  "date_range": "2025-06",
+
+  "summary": "Built Medpill AI during Terrahacks to address the global issue of counterfeit medicines. Developed a prototype that verifies medicine authenticity using OCR, embeddings-based similarity search, and scraped reference images.",
+
+  "details": [
+    "Implemented OCR-based text extraction from medicine images using an OCR API to support authenticity checks.",
+    "Designed a verification pipeline combining web-scraped reference images, embeddings, and similarity search to detect counterfeit medicines.",
+    "Collaborated with teammates on ideation, testing, and rapid iteration under strict hackathon time constraints.",
+    "Integrated multiple technical components into a functional prototype capable of assisting users in verifying medicine authenticity."
+  ],
+
+  "skills": [
+    "Python", "OCR", "Embeddings", "Similarity Search",
+    "Web Scraping", "Hackathon Collaboration",
+    "Problem Solving", "Teamwork", "Rapid Prototyping"
+  ],
+
+  "industry": [
+    "Healthcare", 
+    "Health Tech", 
+    "AI Applications", 
+    "Computer Vision", 
+    "Public Safety"
+  ],
+
+  "impact": "Delivered a functional prototype that helps users verify medicines and raises awareness about counterfeit drugs. Strengthened experience in healthcare-focused problem solving, rapid prototyping, and collaborative development.",
+
+  "challenges": "Extracting accurate text from diverse medicine images was difficult due to variations in fonts, packaging, and lighting. Designing a reliable verification strategy with limited reference data required creative experimentation. Coordinating tasks under hackathon pressure demanded efficient teamwork and prioritization.",
+
+  "tags": [
+    "hackathon", "OCR", "healthcare", "teamwork",
+    "rapid prototyping", "embeddings", "computer vision"
+  ],
+
+  "content": "Built Medpill AI, a healthcare-focused tool that verifies medicine authenticity using OCR, embeddings, and similarity search. Developed during Terrahacks as a rapid prototype addressing counterfeit drug risks."
+}

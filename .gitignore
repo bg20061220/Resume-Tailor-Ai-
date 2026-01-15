@@ -1,0 +1,17 @@
+# Environment Variables 
+.env 
+.env*
+
+# Virtual Environments
+
+venv/
+.venv/
+env/
+
+# os/editor 
+.vscode/
+.idea/
+.DS_Store 
+
+# logs 
+*.log 

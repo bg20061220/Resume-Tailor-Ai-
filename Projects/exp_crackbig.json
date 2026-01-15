@@ -1,0 +1,41 @@
+{
+  "id": "exp_crackbig",
+  "type": "project",
+  "source": "personal",
+  "title": "CrackBig: University Interview Simulator",
+  "date_range": "2025-09",
+
+  "summary": "Developed CrackBig, an AI-driven web application that simulates university interviews, enabling high school students to practice unlimited interview sessions, receive feedback, and build confidence through personalized insights.",
+
+  "details": [
+    "Built the frontend using React and developed backend services with Node.js to support interview simulation workflows.",
+    "Integrated session tracking using React hooks and Node.js to deliver personalized feedback and progress insights for each user.",
+    "Managed deployment across Vercel and Render, resolving key API integration issues and documenting fixes for future scalability.",
+    "Designed a scalable system architecture capable of handling multiple interview sessions and individualized user experiences."
+  ],
+
+  "skills": [
+    "React", "Node.js", "API Integration", "Session Management",
+    "Full-Stack Development", "Deployment (Vercel, Render)",
+    "AI Integration", "Problem Solving", "Web App Development"
+  ],
+
+  "industry": [
+    "EdTech",
+    "AI Applications",
+    "Interview Preparation",
+    "Web Development",
+    "Youth & Student Support"
+  ],
+
+  "impact": "Delivered a live, AI-driven interview simulation platform that helps students practice and improve their university interview skills. The project continues to evolve with new features and enhancements.",
+
+  "challenges": "Setting up video-based interview questions and ensuring smooth playback. Resolving deployment and API integration issues while maintaining reliable session tracking. Designing a scalable system to support multiple sessions and personalized feedback without compromising user experience.",
+
+  "tags": [
+    "full-stack", "AI", "web app", "education technology",
+    "deployment", "React", "Node.js", "personal project"
+  ],
+
+  "content": "Developed CrackBig, an AI-powered university interview simulator built with React and Node.js. Implemented session tracking, resolved deployment and API issues, and created a scalable system to support personalized interview practice for students."
+}
