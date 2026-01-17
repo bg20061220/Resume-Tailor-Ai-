@@ -45,7 +45,7 @@ def search_chunks(query , k = 3) :
 
 
 if __name__ == "__main__":
-    query = "A project where you built your own algorithm  "
+    query = "A project where you used react html css and javascript"
     results = search_chunks(query , k = 3)
     print("Top relevant chunks  : \n")
     for r in results : 
