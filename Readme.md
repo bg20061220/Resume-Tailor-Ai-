@@ -17,8 +17,8 @@ Automatically tailor your resume to any job description using vector search and 
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/resume-tailor
-cd resume-tailor
+git clone https://github.com/yourusername/Resume-Tailor-Ai-
+cd Resume-Tailor-Ai-
 ```
 
 2. **Add your data:**
