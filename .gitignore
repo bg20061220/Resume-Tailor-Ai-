@@ -1,26 +1,119 @@
-# Environment Variables 
-.env 
-.env*
+# =====================
+# Environment & Secrets
+# =====================
+.env
+.env.*
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+credentials.json
+
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Virtual Environments
-
 venv/
 .venv/
 env/
+ENV/
 
-# os/editor 
+# PyTest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# =====================
+# Node.js / Frontend
+# =====================
+node_modules/
+frontend/node_modules/
+frontend/build/
+frontend/.cache/
+.npm
+*.tgz
+
+# =====================
+# Model Cache (HuggingFace/Sentence-Transformers)
+# =====================
+.cache/
+models/
+*.bin
+*.pt
+*.onnx
+sentence-transformers/
+
+# =====================
+# IDE & Editors
+# =====================
 .vscode/
 .idea/
-.DS_Store 
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
 
-# logs 
-*.log 
+# =====================
+# OS Files
+# =====================
+.DS_Store
+Thumbs.db
+Desktop.ini
 
-# Experinces data 
-data/ 
+# =====================
+# Logs & Debug
+# =====================
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Frontend build
-frontend/build/
-frontend/node_modules/
-#backend 
-backend/__pycache__/
+# =====================
+# Local Data & Uploads
+# =====================
+data/
+uploads/
+tmp/
+temp/
+
+# =====================
+# Docker (optional local files)
+# =====================
+docker-compose.override.yml
+
+# =====================
+# Misc
+# =====================
+*.bak
+*.backup
+*.tmp

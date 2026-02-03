@@ -1,0 +1,53 @@
+from fastapi import APIRouter, Depends
+from models import SearchRequest
+from database import get_db
+from utils.embeddings import get_embedding
+from dependencies.auth import get_current_user
+
+router = APIRouter(prefix="/api", tags=["search"])
+
+SIMILARITY_THRESHOLD = 0.5
+
+
+@router.post("/search")
+def search_experiences(
+    request: SearchRequest,
+    user_id: str = Depends(get_current_user),
+):
+    query_embedding = get_embedding(request.query)
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT id, type, title, date_range, content, skills,
+               1 - (embedding <=> %s::vector) as similarity
+        FROM experiences
+        WHERE user_id = %s
+          AND 1 - (embedding <=> %s::vector) >= %s
+        ORDER BY embedding <=> %s::vector
+        LIMIT %s
+    """, (query_embedding, user_id, query_embedding, SIMILARITY_THRESHOLD, query_embedding, request.limit))
+
+    results = []
+    for row in cur.fetchall():
+        results.append({
+            "id": row[0],
+            "type": row[1],
+            "title": row[2],
+            "date_range": row[3],
+            "content": row[4],
+            "skills": row[5],
+            "similarity": row[6]
+        })
+
+    cur.close()
+    conn.close()
+
+    if not results:
+        return {
+            "results": [],
+            "message": "No experiences found matching your query. Try broader search terms."
+        }
+
+    return {"results": results}
