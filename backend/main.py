@@ -9,7 +9,13 @@ app = FastAPI(title="Resume Tailor API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://resumetailorai-9pzkpka42-bhavya-goels-projects.vercel.app",
+        "https://resumetailorai.vercel.app",
+        "https://resumetailorai-bhavya-goels-projects.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
