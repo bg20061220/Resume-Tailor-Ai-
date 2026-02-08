@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ExperienceManager } from './components/ExperienceManager';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_URL = 'http://localhost:8000';
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('generate');
@@ -186,7 +186,7 @@ function MainApp() {
         {activeTab === 'generate' ? (
           <>
             <div className="input-section">
-              <h2>Step 1: Paste Job Description</h2>
+              <h2>Step 1: Paste Qualifications</h2>
               <textarea
                 placeholder="Paste the job description here..."
                 value={jobDescription}

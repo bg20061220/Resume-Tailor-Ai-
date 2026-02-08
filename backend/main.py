@@ -3,7 +3,7 @@ load_dotenv()  # Load .env before other imports
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import experiences, search, generate
+from routes import experiences, search, generate, linkedin
 
 app = FastAPI(title="Resume Tailor API")
 
@@ -25,6 +25,7 @@ app.add_middleware(
 app.include_router(experiences.router)
 app.include_router(search.router)
 app.include_router(generate.router)
+app.include_router(linkedin.router)
 
 
 @app.get("/")

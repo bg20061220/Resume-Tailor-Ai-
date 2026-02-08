@@ -891,3 +891,100 @@ button:disabled {
   width: auto;
   padding: 0.625rem 1.25rem;
 }
+
+/* Experience Header Actions */
+.experience-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Import Button */
+.import-btn {
+  background: var(--primary);
+  width: auto;
+  padding: 0.625rem 1.25rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.import-btn:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+/* Import Modal */
+.import-modal {
+  max-width: 700px;
+}
+
+.import-hint {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem 0;
+  line-height: 1.5;
+}
+
+/* Parsed Results */
+.parsed-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.parsed-results-header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.save-all-btn {
+  background: var(--success);
+  width: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.save-all-btn:hover:not(:disabled) {
+  background: var(--success-hover);
+}
+
+.parsed-experience-card {
+  background: var(--background);
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.parsed-experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.parsed-experience-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.parsed-experience-card h3 {
+  margin: 0 0 0.375rem 0;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.parsed-experience-card .date-range {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0 0 0.75rem 0;
+}
+
+.parsed-experience-card .content-preview {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.6;
+}
