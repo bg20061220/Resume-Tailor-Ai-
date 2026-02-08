@@ -22,3 +22,13 @@ class GenerateRequest(BaseModel):
     job_description: str
     num_bullets: int = 3
     experience_ids: List[str] = []
+
+
+class LinkedInParseRequest(BaseModel):
+    experiences_text: Optional[str] = None
+    projects_text: Optional[str] = None
+    volunteering_text: Optional[str] = None
+
+
+class BatchExperienceRequest(BaseModel):
+    experiences: List[ProjectData]

@@ -1,10 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import './App.css';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ExperienceManager } from './components/ExperienceManager';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
+const ServerStatusContext = createContext({ serverReady: true });
+const useServerStatus = () => useContext(ServerStatusContext);
+
+function ServerWarmup({ children }) {
+  const [serverReady, setServerReady] = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_URL}/health`)
+      .then((res) => {
+        if (res.ok) setServerReady(true);
+      })
+      .catch(() => {
+        // Retry after a delay if the first attempt fails
+        const retry = setInterval(() => {
+          fetch(`${API_URL}/health`)
+            .then((res) => {
+              if (res.ok) {
+                setServerReady(true);
+                clearInterval(retry);
+              }
+            })
+            .catch(() => {});
+        }, 3000);
+        return () => clearInterval(retry);
+      });
+  }, []);
+
+  return (
+    <ServerStatusContext.Provider value={{ serverReady }}>
+      {children}
+    </ServerStatusContext.Provider>
+  );
+}
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('generate');
@@ -158,7 +192,7 @@ function MainApp() {
     <div className="App">
       <header className="App-header">
         <h1>Resume Tailor</h1>
-        <p>AI-powered resume customization</p>
+        <p>Add your work experience, projects, and volunteering in Manage Experiences and then paste a job description to get your top 3 most relevant matches with ATS-friendly bullets.</p>
         <div className="user-info">
           <span>{user?.email}</span>
           <button onClick={handleSignOut} className="sign-out-btn">
@@ -186,7 +220,7 @@ function MainApp() {
         {activeTab === 'generate' ? (
           <>
             <div className="input-section">
-              <h2>Step 1: Paste Job Description</h2>
+              <h2>Step 1: Paste Qualifications</h2>
               <textarea
                 placeholder="Paste the job description here..."
                 value={jobDescription}
@@ -306,13 +340,32 @@ function MainApp() {
   );
 }
 
+function ServerGate({ children }) {
+  const { serverReady } = useServerStatus();
+
+  if (!serverReady) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Our server is waking up, this will take 15-20 seconds...</p>
+      </div>
+    );
+  }
+
+  return children;
+}
+
 function App() {
   return (
-    <AuthProvider>
-      <ProtectedRoute>
-        <MainApp />
-      </ProtectedRoute>
-    </AuthProvider>
+    <ServerWarmup>
+      <AuthProvider>
+        <ProtectedRoute>
+          <ServerGate>
+            <MainApp />
+          </ServerGate>
+        </ProtectedRoute>
+      </AuthProvider>
+    </ServerWarmup>
   );
 }
 

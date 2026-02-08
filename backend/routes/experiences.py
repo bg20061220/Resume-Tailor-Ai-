@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from models import ProjectData
+from models import ProjectData, BatchExperienceRequest
 from database import get_db
-from utils.embeddings import get_embedding
+from utils.embeddings import get_embedding, get_embeddings_batch
 from dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/api", tags=["experiences"])
@@ -34,6 +34,47 @@ def add_experience(
         ))
         conn.commit()
         return {"status": "success", "id": project.id}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        cur.close()
+        conn.close()
+
+
+@router.post("/experiences/batch")
+def add_experiences_batch(
+    request: BatchExperienceRequest,
+    user_id: str = Depends(get_current_user),
+):
+    if not request.experiences:
+        raise HTTPException(status_code=400, detail="No experiences provided")
+
+    texts = [exp.content for exp in request.experiences]
+    embeddings = get_embeddings_batch(texts)
+
+    conn = get_db()
+    cur = conn.cursor()
+
+    try:
+        for exp, embedding in zip(request.experiences, embeddings):
+            cur.execute("""
+            INSERT INTO experiences (id, user_id, type, title, date_range, skills, industry, tags, content, embedding)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                exp.id,
+                user_id,
+                exp.type,
+                exp.title,
+                exp.date_range,
+                exp.skills,
+                exp.industry,
+                exp.tags,
+                exp.content,
+                embedding
+            ))
+        conn.commit()
+        return {"status": "success", "count": len(request.experiences)}
     except Exception as e:
         conn.rollback()
         raise HTTPException(status_code=400, detail=str(e))
