@@ -1,10 +1,10 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 import './App.css';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ExperienceManager } from './components/ExperienceManager';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_URL = 'http://localhost:8000';
 
 const ServerStatusContext = createContext({ serverReady: true });
 const useServerStatus = () => useContext(ServerStatusContext);
@@ -51,6 +51,19 @@ function MainApp() {
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   const { user, signOut, getAccessToken } = useAuth();
+  const { serverReady } = useServerStatus();
+  const [awaitingServer, setAwaitingServer] = useState(false);
+  const pendingActionRef = useRef(null);
+
+  // Auto-execute pending action when server becomes ready
+  useEffect(() => {
+    if (serverReady && pendingActionRef.current) {
+      const action = pendingActionRef.current;
+      pendingActionRef.current = null;
+      setAwaitingServer(false);
+      action();
+    }
+  }, [serverReady]);
 
   // Helper to make authenticated API calls
   const authFetch = async (url, options = {}) => {
@@ -85,6 +98,11 @@ function MainApp() {
   };
 
   const searchExperiences = async () => {
+    if (!serverReady) {
+      setAwaitingServer(true);
+      pendingActionRef.current = () => searchExperiences();
+      return;
+    }
     setSearchLoading(true);
     setProjects([]);
     setSelectedIds(new Set());
@@ -137,6 +155,12 @@ function MainApp() {
   const generateBullets = async () => {
     if (selectedIds.size === 0) {
       alert('Please select at least one experience');
+      return;
+    }
+
+    if (!serverReady) {
+      setAwaitingServer(true);
+      pendingActionRef.current = () => generateBullets();
       return;
     }
 
@@ -204,20 +228,25 @@ function MainApp() {
       <div className="tabs">
         <button
           className={`tab ${activeTab === 'generate' ? 'active' : ''}`}
-          onClick={() => setActiveTab('generate')}
+          onClick={() => { setActiveTab('generate'); setAwaitingServer(false); pendingActionRef.current = null; }}
         >
           Generate Bullets
         </button>
         <button
           className={`tab ${activeTab === 'manage' ? 'active' : ''}`}
-          onClick={() => setActiveTab('manage')}
+          onClick={() => { setActiveTab('manage'); setAwaitingServer(false); pendingActionRef.current = null; }}
         >
           Manage Experiences
         </button>
       </div>
 
       <div className="container">
-        {activeTab === 'generate' ? (
+        {(awaitingServer || (activeTab === 'manage' && !serverReady)) ? (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>Our server is waking up, this will take 15-20 seconds...</p>
+          </div>
+        ) : activeTab === 'generate' ? (
           <>
             <div className="input-section">
               <h2>Step 1: Paste Qualifications</h2>
@@ -340,29 +369,12 @@ function MainApp() {
   );
 }
 
-function ServerGate({ children }) {
-  const { serverReady } = useServerStatus();
-
-  if (!serverReady) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Our server is waking up, this will take 15-20 seconds...</p>
-      </div>
-    );
-  }
-
-  return children;
-}
-
 function App() {
   return (
     <ServerWarmup>
       <AuthProvider>
         <ProtectedRoute>
-          <ServerGate>
-            <MainApp />
-          </ServerGate>
+          <MainApp />
         </ProtectedRoute>
       </AuthProvider>
     </ServerWarmup>
