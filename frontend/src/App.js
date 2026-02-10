@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ExperienceManager } from './components/ExperienceManager';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 
 const ServerStatusContext = createContext({ serverReady: true });
 const useServerStatus = () => useContext(ServerStatusContext);
@@ -214,16 +214,12 @@ function MainApp() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Resume Tailor</h1>
-        <p>Add your work experience, projects, and volunteering in Manage Experiences and then paste a job description to get your top 3 most relevant matches with ATS-friendly bullets.</p>
-        <div className="user-info">
-          <span>{user?.email}</span>
-          <button onClick={handleSignOut} className="sign-out-btn">
-            Sign Out
-          </button>
-        </div>
-      </header>
+      <nav className="top-bar">
+        <span className="logo">TailorCV</span>
+        <button onClick={handleSignOut} className="sign-out-btn">
+          Sign Out
+        </button>
+      </nav>
 
       <div className="tabs">
         <button
@@ -246,22 +242,39 @@ function MainApp() {
             <div className="loading-spinner"></div>
             <p>Our server is waking up, this will take 15-20 seconds...</p>
           </div>
-        ) : activeTab === 'generate' ? (
+        ) : activeTab === 'manage' ? (
+          <div className="manage-layout">
+            <aside className="manage-sidebar">
+              <h2 className="manage-title">Build your <span className="manage-highlight">experience library</span></h2>
+              <p className="manage-subtitle">Add work, projects, and volunteering and then let AI match them to any job description.</p>
+            </aside>
+            <div className="manage-content">
+              <ExperienceManager authFetch={authFetch} apiUrl={API_URL} />
+            </div>
+          </div>
+        ) : (
           <>
-            <div className="input-section">
-              <h2>Step 1: Paste Qualifications</h2>
-              <textarea
-                placeholder="Paste the job description here..."
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                rows={8}
-              />
-              <button
-                onClick={searchExperiences}
-                disabled={searchLoading || !jobDescription.trim()}
-              >
-                {searchLoading ? 'Finding Matches...' : 'Find Matching Experiences'}
-              </button>
+            <div className="generate-layout">
+              <aside className="manage-sidebar">
+                <h2 className="manage-title">Paste job <span className="manage-highlight">qualifications</span></h2>
+                <p className="manage-subtitle">Paste the skills, requirements, or descriptions from any job posting to find your most relevant experiences.</p>
+              </aside>
+              <div className="manage-content">
+                <div className="input-section">
+                  <textarea
+                    placeholder="Paste the job description here..."
+                    value={jobDescription}
+                    onChange={(e) => setJobDescription(e.target.value)}
+                    rows={8}
+                  />
+                  <button
+                    onClick={searchExperiences}
+                    disabled={searchLoading || !jobDescription.trim()}
+                  >
+                    {searchLoading ? 'Finding Matches...' : 'Find Matching Experiences'}
+                  </button>
+                </div>
+              </div>
             </div>
 
             {matchedExperiences.length > 0 && (
@@ -361,10 +374,11 @@ function MainApp() {
               </div>
             )}
           </>
-        ) : (
-          <ExperienceManager authFetch={authFetch} apiUrl={API_URL} />
         )}
       </div>
+      <footer className="app-footer">
+        <p>Built by UWaterloo students </p>
+      </footer>
     </div>
   );
 }

@@ -59,6 +59,8 @@ export function Auth() {
           <div className="hero-feature-card">
             <h3>ATS-Friendly Bullet Generation</h3>
             <p>Generate tailored, ATS-optimized resume bullet points with strong action verbs, relevant keywords, and quantified results — ready to pass applicant tracking systems and impress recruiters.</p>
+
+
           </div>
         </div>
       </div>
