@@ -86,6 +86,10 @@ function MainApp() {
       throw new Error('Session expired. Please sign in again.');
     }
 
+    if (response.status === 429) {
+      throw new Error('Too many requests. Please wait a moment and try again.');
+    }
+
     return response;
   };
 
