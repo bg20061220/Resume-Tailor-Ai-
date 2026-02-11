@@ -1,79 +1,97 @@
-# Resume Tailor - AI-Powered Resume Customization Tool
+# TailorCV
 
-Automatically tailor your resume to any job description using vector search and local LLMs.
+An AI-powered resume bullet point generator that matches your experiences to any job description using semantic search and LLM-generated content.
 
-## Features
-- 🔍 Vector similarity search with pgvector
-- 🤖 Local LLM integration (Ollama + llama3.2)
-- 🎯 Smart matching of experience to job requirements
-- 🚀 Fully containerized with Docker
-- 🔒 100% local - your data never leaves your machine
+**Live at [tailorcvai.vercel.app](https://tailorcvai.vercel.app)**
 
-## Prerequisites
-- Docker Desktop ( Download link https://www.docker.com/products/docker-desktop/) 
-- (Optional) NVIDIA GPU for faster LLM inference
+## How It Works
 
-## Quick Start
-
-1. **Clone the repository:**
-```bash
-git clone https://github.com/yourusername/Resume-Tailor-Ai-
-cd Resume-Tailor-Ai-
-```
-
-2. **Add your data:**
-   - Replace files in `example-data/Projects/` and `example-data/Roles/` with your own JSON files
-   - Follow the same format as the example files
-
-3. **Run setup script:**
-```bash
-chmod +x setup.sh
-./setup.sh
-```
-
-4. **Access the app:**
-   - Open http://localhost:3000 in your browser
-
-## Usage
-
-1. Paste a job description
-2. Click "Find Relevant Experience"
-3. Select a project from the top 3 matches
-4. Get AI-generated, tailored resume bullets
-
-## Manual Setup (if setup.sh doesn't work)
-```bash
-# Start containers
-docker-compose up -d --build
-
-# Wait 10 seconds for DB to start
-sleep 10
-
-# Setup database
-docker-compose exec backend python setup_database.py
-docker-compose exec backend python migrate_to_postgres.py
-
-# Download LLM model
-docker-compose exec ollama ollama pull llama3.2
-```
-
-## Stopping the App
-```bash
-docker-compose down
-```
+1. **Build your experience library** — Add work experience, projects, and volunteering manually or by importing from LinkedIn
+2. **Paste a job description** — The system uses vector similarity search to find your most relevant experiences
+3. **Generate tailored bullets** — An LLM creates ATS-friendly resume bullet points matched to the job requirements
 
 ## Tech Stack
-- **Backend**: FastAPI + PostgreSQL + pgvector
-- **Frontend**: React
-- **Embeddings**: sentence-transformers (MiniLM)
-- **LLM**: Ollama (llama3.2)
+
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | React, hosted on Vercel |
+| **Backend** | FastAPI (Python), hosted on Render |
+| **Database** | PostgreSQL with pgvector extension (Supabase) |
+| **Embeddings** | Cohere API (embed-english-light-v3.0, 384 dimensions) |
+| **LLM** | Groq API (llama-3.1-8b-instant) |
+| **Authentication** | Supabase Auth (Google OAuth) |
+| **Rate Limiting** | slowapi |
 
 ## Architecture
+
 ```
-Frontend (React) → Backend (FastAPI) → PostgreSQL + pgvector
-                                    ↓
-                                 Ollama (LLM)
+React (Vercel) → FastAPI (Render) → Supabase PostgreSQL + pgvector
+                       ↓                        ↓
+                   Groq LLM              Cohere Embeddings
+```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/search` | Semantic similarity search across experiences |
+| POST | `/api/generate` | Generate tailored resume bullet points |
+| POST | `/api/experiences` | Add a single experience |
+| POST | `/api/experiences/batch` | Batch add experiences |
+| GET | `/api/experiences` | List all user experiences |
+| PUT | `/api/experiences/{id}` | Update an experience |
+| DELETE | `/api/experiences/{id}` | Delete an experience |
+| POST | `/api/parse-linkedin` | Parse LinkedIn profile text into structured data |
+| GET | `/health` | Health check |
+
+## Local Development
+
+### Prerequisites
+
+- Python 3.10+
+- Node.js 18+
+- Supabase project with pgvector enabled
+- API keys for Cohere and Groq
+
+### Backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the `backend/` directory:
+
+```
+SUPABASE_DB_URL=your_supabase_db_url
+SUPABASE_JWT_SECRET=your_jwt_secret
+COHERE_API_KEY=your_cohere_key
+GROQ_API_KEY=your_groq_key
+```
+
+```bash
+uvicorn main:app --reload --port 8000
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file in the `frontend/` directory:
+
+```
+REACT_APP_API_URL=http://localhost:8000
+REACT_APP_SUPABASE_URL=your_supabase_url
+REACT_APP_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+```bash
+npm start
 ```
 
 ## License
+
 MIT
