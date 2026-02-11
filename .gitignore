@@ -117,3 +117,5 @@ docker-compose.override.yml
 *.bak
 *.backup
 *.tmp
+
+CLAUDE.md
