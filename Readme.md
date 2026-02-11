@@ -1,6 +1,6 @@
 # TailorCV
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://tailorcvai.vercel.app)
+
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -34,11 +34,44 @@ Traditional keyword matching fails to capture semantic similarity. This system u
 - Context-aware prompting using retrieved experiences
 - Cost: **~$0.002** per resume generation vs **~$0.02+** with GPT-4
 
-### Production Features
-- Rate limiting with `slowapi` to prevent API abuse
-- Google OAuth via Supabase for secure authentication
-- Batch operations for efficient LinkedIn imports
-- LinkedIn profile parsing (unstructured → structured data)
-- RESTful API design with proper CRUD operations
+## 🔧 Production Operations
+
+### Platform Migration: Render → Railway
+
+**Original Setup (Render):**
+- Free tier with 15-minute sleep timeout
+- Required cron keepalive every 5 minutes to prevent cold starts
+- Memory crashes after 4-6 hours (512MB limit)
+
+**Problem Identified:**
+After running in production, discovered three issues:
+1. **Cold starts**: Users experienced 30-50s delays after idle periods
+2. **Memory leaks**: App crashed hitting 512MB limit
+3. **Cron reliability**: Keepalive sometimes failed during slow container restarts
+
+**Solution (Railway):**
+- Migrated to Railway (always-on, no sleep)
+- Eliminated cold start problem entirely
+- 1GB memory limit (no more crashes)
+- **Cost**: $5/month vs free tier
+
+**Result**: 
+- ✅ <100ms response times (vs 30-50s cold starts)
+- ✅ 100% uptime since migration
+- ✅ Zero memory-related crashes
+
+### Uptime Monitoring
+
+**Health Check System:**
+- Cron job pings `/health` endpoint every 30 minutes
+- Alert triggers if endpoint fails to respond
+- Provides basic uptime monitoring without paid tools
+
+**Why 30 minutes:**
+- Railway doesn't sleep (no need for frequent pings)
+- Frequent enough to catch issues quickly
+- Reduces noise from transient failures
+
+**Future improvement**: Migrate to proper monitoring (UptimeRobot, Better Uptime)
 
 ## 🏗️ Architecture
