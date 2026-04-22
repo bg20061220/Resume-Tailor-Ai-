@@ -1,6 +1,10 @@
 from dotenv import load_dotenv
-load_dotenv()  # Load .env before other imports
+load_dotenv()
 
+import asyncio
+import os
+import signal
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -11,8 +15,19 @@ from routes import experiences, search, generate, linkedin
 
 limiter = Limiter(key_func=get_remote_address)
 
-app = FastAPI(title="Resume Tailor API")
+async def scheduled_restart():
+    await asyncio.sleep(10 * 24 * 60 * 60)  # 10 days
+    os.kill(os.getpid(), signal.SIGTERM)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    asyncio.create_task(scheduled_restart())
+    yield
+
+app = FastAPI(title="Resume Tailor API", lifespan=lifespan)
 app.state.limiter = limiter
+
+# ... rest stays exactly the same
 
 
 @app.exception_handler(RateLimitExceeded)
