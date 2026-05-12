@@ -93,34 +93,45 @@ def add_experiences_batch(
 
 @router.get("/experiences")
 def get_all_experiences(user_id: str = Depends(get_current_user)):
-    conn = get_db()
-    cur = conn.cursor()
+    conn = None
+    cur = None
+    try:
+        conn = get_db()
+        cur = conn.cursor()
 
-    cur.execute("""
-         SELECT id, type, title, date_range, skills, industry, tags, content
-         FROM experiences
-         WHERE user_id = %s
-         ORDER BY date_range DESC
-    """, (user_id,))
+        # test connection is alive first
+        cur.execute("SELECT 1")
 
-    results = []
-    for row in cur.fetchall():
-        results.append({
-            "id": row[0],
-            "type": row[1],
-            "title": row[2],
-            "date_range": row[3],
-            "skills": row[4],
-            "industry": row[5],
-            "tags": row[6],
-            "content": row[7]
-        })
+        cur.execute("""
+             SELECT id, type, title, date_range, skills, industry, tags, content
+             FROM experiences
+             WHERE user_id = %s
+             ORDER BY date_range DESC
+        """, (user_id,))
 
-    cur.close()
-    conn.close()
+        results = []
+        for row in cur.fetchall():
+            results.append({
+                "id": row[0],
+                "type": row[1],
+                "title": row[2],
+                "date_range": row[3],
+                "skills": row[4],
+                "industry": row[5],
+                "tags": row[6],
+                "content": row[7]
+            })
 
-    return {"experiences": results, "count": len(results)}
+        return {"experiences": results, "count": len(results)}
 
+    except Exception as e:
+        print(f"[get_all_experiences] ERROR: {e}")  # shows in Render logs
+        raise HTTPException(status_code=500, detail=f"Failed to fetch experiences: {str(e)}")
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 @router.put("/experiences/{experience_id}")
 @limiter.limit("15/minute")
